@@ -4,48 +4,48 @@ using namespace std;
 
 
  
- 
-void swap(int &a, int &b)
+ template <class T>
+void swap(T* &a, T* &b)
 {
-    int t = a;
-    a = b;
-    b = t;
+    int t = *a;
+    *a = *b;
+    *b = t;
 }
  
- 
-int partition (int arr[], int low, int high)
+ template <class T>
+T* Partition (T* start, T* end)
 {
-    int pivot = arr[low];    // pivot
-    int left = low+1;
-    int right = high;
+    int pivot = *start;    // pivot
+    T* left = start+1;
+    T* right = end-1;
     while(true){
-        while(left <= right && arr[left] < pivot) left++;
-        while(right >= left && arr[right] > pivot) right--;
+        while(left <= right && *left < pivot) left++;
+        while(right >= left && *right > pivot) right--;
         if (left >= right) break;
-        swap(arr[left], arr[right]);
+        swap(left, right);
         left++;
         right--;
     }
-    swap(arr[low], arr[right]);
+    swap(start, right);
     return right;
 }
-
+template <class T>
 /* Hàm thực hiện giải thuật quick sort */
-void quickSort(int arr[], int low, int high)
+void QuickSort(T* start, T* end)
 { static bool x = true;
-    if (low <= high)
+    if (start < end)
     {
         /* pi là chỉ số nơi phần tử này đã đứng đúng vị trí
          và là phần tử chia mảng làm 2 mảng con trái & phải */
-        int pi  = partition(arr, low, high);
+        T* pi  = Partition(start, end);
        if(x==false) cout << "x";
-        cout << pi - low;
+        cout << pi - start;
         x = false;
         
         
         // Gọi đệ quy sắp xếp 2 mảng con trái và phải
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
+        QuickSort(start, pi - 1);
+        QuickSort(pi + 1, end);
     }
 }
  
@@ -61,14 +61,9 @@ void printArray(int arr[], int size)
  
 int main()
 {
-    int arr[] = { 3, 5, 7, 10 ,12, 14, 15, 13, 1, 2, 9, 6, 4, 8, 11, 16, 17, 18, 20, 19};
-   // 1, 2, 3, 5 ,8, 4, 6, 9, 7, 10, 13, 15, 14, 12, 11, 16, 17, 18, 20, 19
-     // 1, 2, 3, 4 ,5, 8, 6, 9, 7, 10, 13, 15, 14, 12, 11, 16, 17, 18, 20, 19
-    //    0  0  2     1               6
-    int n = sizeof(arr)/sizeof(arr[0]);
-    quickSort(arr, 0, n-1);
-    cout <<endl;
-    printf("Sorted array: \n");
-    printArray(arr, n);
+    int array[] = { 3, 5, 7, 10 ,12, 14, 15, 13, 1, 2, 9, 6, 4, 8, 11, 16, 17, 18, 20, 19 };
+    QuickSort(&array[0], &array[20]);
+     int n = sizeof(array)/sizeof(array[0]);
+    printArray(array, n);
     return 0;
 }
