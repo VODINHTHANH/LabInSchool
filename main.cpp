@@ -1,11 +1,3 @@
-/******************************************************************************
-
-                              Online C++ Compiler.
-              Code, Compile, Run and Debug C++ program online.
-Write your code in this editor and press "Run" button to compile and execute it.
-
-*******************************************************************************/
-
 #include <iostream>
 
 using namespace std;
@@ -35,19 +27,21 @@ int partition (int arr[], int low, int high)
         right--;
     }
     swap(arr[low], arr[right]);
-    return right-low;
+    return right;
 }
- 
+
 /* Hàm thực hiện giải thuật quick sort */
 void quickSort(int arr[], int low, int high)
-{
+{ static bool x = true;
     if (low <= high)
     {
         /* pi là chỉ số nơi phần tử này đã đứng đúng vị trí
          và là phần tử chia mảng làm 2 mảng con trái & phải */
-        int pi  = partition(arr, low, high) + low;
-        cout << pi-low;
-        if(low < high) cout << " ";
+        int pi  = partition(arr, low, high);
+       if(x==false) cout << "x";
+        cout << pi - low;
+        x = false;
+        
         
         // Gọi đệ quy sắp xếp 2 mảng con trái và phải
         quickSort(arr, low, pi - 1);
