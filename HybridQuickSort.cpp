@@ -8,7 +8,6 @@ private:
     static T *Partition(T *start, T *end);
 
 public:
-static void QuickSort(T* start, T* end,int min_size) ;
     static void printArray(T *start, T *end)
     {
         int size = end - start;
@@ -45,7 +44,7 @@ T *Sorting<T>::Partition(T *start, T *end)
     return right;
 }
 template <class T>
-void Sorting<T>::QuickSort(T* start, T* end, int min_size) {
+void Sorting<T>::hybridQuickSort(T* start, T* end, int min_size) {
     if(end-start< min_size && end-start > 0)
     {
         cout << "Insertion sort: ";
@@ -57,8 +56,8 @@ void Sorting<T>::QuickSort(T* start, T* end, int min_size) {
     {   cout << "Quick sort: ";
         printArray(start,end);
         T* pi  = Partition(start, end);
-        QuickSort(start, pi, min_size);
-        QuickSort(pi + 1, end, min_size);
+        hybridQuickSort(start, pi, min_size);
+        hybridQuickSort(pi + 1, end, min_size);
     }
 }
 template <class T>
@@ -75,17 +74,6 @@ void Sorting<T>::insertionSort(T *start, T *end)
     } 
     *j= val ; 
     }  
-}
-
-template <class T>
-void Sorting<T>::hybridQuickSort(T *start, T *end, int min_size)
-{
-   if (start < end)
-    {
-        T* pi  = Partition(start, end);
-        QuickSort(start, pi);
-        QuickSort(pi + 1, end);
-    } 
 }
 int main()
 {
