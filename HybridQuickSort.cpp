@@ -31,24 +31,66 @@ void Sorting<T>::insertionSort(T *start, T *end)
 {
      for(T* i=start+1;i<end;i++) 
     { 
-      T val = *i ; 
+      T* val = i ; 
       T* j = i ; 
-    while (j>start && *(j-1)>val) 
+    while (j>start && *(j-1)>*val) 
       { 
         *j= *(j-1) ; 
       j-= 1; 
     } 
-    *j= val ; 
+    *j= *val ; 
     }  
 }
-
 template <class T>
 void Sorting<T>::hybridQuickSort(T *start, T *end, int min_size)
 {
+     while (start < end-1)  
+    { 
+  
+    // If the size of the array is less  
+    // than threshold apply insertion sort  
+    // and stop recursion  
+  
+    if (end-start < min_size) 
+      { 
+        insertionSort(start,end); 
+      break; 
+    } 
+  
+    else 
+        
+        { 
+          T* pivot = Partition(start,end) ; 
+  
+      // Optimised quicksort which works on  
+      // the smaller arrays first  
+  
+      // If the left side of the pivot  
+      // is less than right, sort left part  
+      // and move to the right part of the array  
+  
+      if (pivot-start<end-1-pivot) 
+        { 
+          hybridQuickSort(start,end);  
+        start = pivot + 1; 
+      } 
+      else
+        { 
+  
+        // If the right side of pivot is less  
+        // than left, sort right side and  
+        // move to the left side  
+            
+        hybridQuickSort(pivot + 1, end); 
+        end = pivot; 
+        } 
+  
+     } 
+  
+   } 
 }
 int main()
 {
     int array[] = {1, 2, 6, 4, 7, 8, 5, 3};
     Sorting<int>::insertionSort(&array[0],&array[8]);
-    Sorting<int>::printArray(&array[0],&array[8]);
 }
