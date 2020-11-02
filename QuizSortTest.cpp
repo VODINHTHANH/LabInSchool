@@ -17,7 +17,7 @@ T* Sorting<T>::Partition(T* start, T* end) {
     T* right = end-1;
     while(true){
         while(left <= right && (*left) < pivot) left++;
-        while(right >= left && (*right) > pivot) right--;
+        while(right >= left && (*right) >= pivot) right--;
         if (left >= right) break;
         T t = *left;
     *left = *right;
